@@ -1,0 +1,110 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="Convert colors from rgba to KML or hex notation.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			label {
+				font-weight:bold;
+				padding-right:10px;
+			}
+			.colorTester {
+				display:inline-block;
+				width:15px;
+				height:15px;
+			}
+	  </style>
+        <script>
+		var patterns = {
+			rgba: /([0-9]{1,3},){2}[0-9]{1,3}(,[0-1](\.[0-9]+)?)?/,
+			hex: /([0-9A-Fa-f]{2}){3}/,
+			kml: /([0-9A-Fa-f]{2}){4}/
+		  };
+		  document.addEventListener('DOMContentLoaded',function() {
+			var inputs = {
+			  rgba: document.getElementById('rgba'),
+			  hex: document.getElementById('hex'),
+			  hexOp: document.getElementById('opacity'),
+			  kml:document.getElementById('kml')
+			};
+			var testers = {
+			  hex:document.getElementById('testHex'),
+			  rgba:document.getElementById('testRgba')
+			};
+			inputs.rgba.addEventListener('keyup',function(ev) {
+			  var rgba = this.value;
+			  
+			  if(patterns.rgba.test(rgba)) {
+				
+				var hex = converter.rgbaToHex(rgba);
+				var kml = converter.rgbaToKml(rgba);
+				inputs.hex.value = hex.color;
+				inputs.hexOp.value = hex.op;
+				inputs.kml.value = kml;
+				
+				testers.hex.style.backgroundColor = "#"+hex.color;
+				testers.hex.style.opacity = hex.op;
+				testers.rgba.style.backgroundColor = "rgba("+rgba+")";
+			  }
+			});
+			var hexHandler = function(ev) {
+			  var hex = inputs.hex.value;
+			  var op = inputs.hexOp.value || 1;
+			  if(patterns.hex.test(hex)) {
+				var rgbaC = converter.hexToRgba(hex,op);
+				var rgba =  rgbaC.r+","+rgbaC.g+","+rgbaC.b+","+rgbaC.a;
+				var kml = converter.rgbaToKml(rgba);
+				inputs.rgba.value = rgba;
+				inputs.kml.value = kml;
+				
+				testers.hex.style.backgroundColor = "#"+hex;
+				testers.hex.style.opacity = op;
+				testers.rgba.style.backgroundColor = "rgba("+rgba+")";
+			  }
+			};
+			inputs.hex.addEventListener('keyup',hexHandler);
+			inputs.hexOp.addEventListener('keyup',hexHandler);
+			inputs.kml.addEventListener('keyup',function(ev){
+			  var kml = this.value;
+			  if(patterns.kml.test(kml)) {
+				var rgbaC = converter.kmlToRgba(kml);
+				var rgba =  rgbaC.r+","+rgbaC.g+","+rgbaC.b+","+rgbaC.a;
+				var hex = converter.rgbaToHex(rgba);
+				inputs.rgba.value = rgba;
+				inputs.hex.value = hex.color;
+				inputs.hexOp.value = hex.op;
+				
+				testers.hex.style.backgroundColor = "#"+hex.color;
+				testers.hex.style.opacity = hex.op;
+				testers.rgba.style.backgroundColor = "rgba("+rgba+")";
+			  }
+			});
+		  });
+		</script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+		<div>
+			<label for="hex">Hex:</label>#<input type="text" id="hex" placeholder="RRGGBB" /><input id="opacity" type="text" placeholder="Opacity (0-1)" size="8" />
+			<div class='colorTester' id='testHex'></div>
+		</div>
+		<div>
+			<label for="rgba">rgba:</label>rgba(<input id="rgba" type="text" placeholder="r,g,b[,a]" />)
+			<div class='colorTester' id='testRgba'></div>
+		</div>
+		<div>
+			<label for="kml">Kml:</label>&lt;color&gt;<input id="kml" type="text" placeholder="AABBGGRR" />&lt;/color&gt;
+		</div>
+
+        <script src="rgbaToKml.js"></script>
+    </body>
+</html>
