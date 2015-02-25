@@ -1,5 +1,5 @@
 # rgbaToKml
-This small javascript lib allow you to convert colors from rgba notation to hexadecimal CSS or KML formats, or the other way around.
+This small javascript lib allows you to convert colors from rgba notation to hexadecimal CSS or KML formats, or the other way around.
 
 Try it live here : <http://eartz.github.io/rgbaToKml/>
 
