@@ -11,6 +11,13 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+	<style>
+	.colorTester {
+      display:inline-block;
+      width:15px;
+      height:15px;
+    }
+	</style>
   </head>
   <body>
     <div class="wrapper">
@@ -102,22 +109,24 @@ var patterns = {
 		  });
 </script>
 <div>
-			<label for="hex">Hex:</label>#<input type="text" id="hex" placeholder="RRGGBB" /><input id="opacity" type="text" placeholder="Opacity (0-1)" size="8" />
+			<label for="hex"><strong>Hex:</strong></label>#<input type="text" id="hex" placeholder="RRGGBB" /><input id="opacity" type="text" placeholder="Opacity (0-1)" size="8" />
 			<div class='colorTester' id='testHex'></div>
 		</div>
 		<div>
-			<label for="rgba">rgba:</label>rgba(<input id="rgba" type="text" placeholder="r,g,b[,a]" />)
+			<label for="rgba"><strong>rgba:</strong></label>rgba(<input id="rgba" type="text" placeholder="r,g,b[,a]" />)
 			<div class='colorTester' id='testRgba'></div>
 		</div>
 		<div>
-			<label for="kml">Kml:</label>&lt;color&gt;<input id="kml" type="text" placeholder="AABBGGRR" />&lt;/color&gt;
+			<label for="kml"><strong>Kml:</strong></label>&lt;color&gt;<input id="kml" type="text" placeholder="AABBGGRR" />&lt;/color&gt;
 		</div>
+		<br />
+<hr />
 <h3>
 <a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h3>
 
-<p><a href="mailto:camille.hodoul@gmail.com">camille.hodoul@gmail.com</a>
-@Eartz_HC on Twitter.
-<a href="http://webdev-snippets.net/">http://webdev-snippets.net/</a></p>
+<p><a href="mailto:camille.hodoul@gmail.com">camille.hodoul@gmail.com</a></p>
+<p><a href="http://twitter.com/Eartz_HC">@Eartz_HC</a></p>
+<p><a href="http://webdev-snippets.net/">http://webdev-snippets.net/</a></p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/Eartz">Eartz</a></p>
