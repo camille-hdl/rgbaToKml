@@ -30,7 +30,85 @@
       <section>
         <p>This little piece of code allows you to <strong>convert colors from rgba format to hexadecimal in either CSS or KML formats</strong>.
 You can try it online here, or download the source and use it in your project.</p>
-
+<script src="https://raw.githubusercontent.com/Eartz/rgbaToKml/master/rgbatokml.min.js"></script>
+<script>
+var patterns = {
+			rgba: /([0-9]{1,3},){2}[0-9]{1,3}(,[0-1](\.[0-9]+)?)?/,
+			hex: /([0-9A-Fa-f]{2}){3}/,
+			kml: /([0-9A-Fa-f]{2}){4}/
+		  };
+		  document.addEventListener('DOMContentLoaded',function() {
+			var inputs = {
+			  rgba: document.getElementById('rgba'),
+			  hex: document.getElementById('hex'),
+			  hexOp: document.getElementById('opacity'),
+			  kml:document.getElementById('kml')
+			};
+			var testers = {
+			  hex:document.getElementById('testHex'),
+			  rgba:document.getElementById('testRgba')
+			};
+			inputs.rgba.addEventListener('keyup',function(ev) {
+			  var rgba = this.value;
+			  
+			  if(patterns.rgba.test(rgba)) {
+				
+				var hex = converter.rgbaToHex(rgba);
+				var kml = converter.rgbaToKml(rgba);
+				inputs.hex.value = hex.color;
+				inputs.hexOp.value = hex.op;
+				inputs.kml.value = kml;
+				
+				testers.hex.style.backgroundColor = "#"+hex.color;
+				testers.hex.style.opacity = hex.op;
+				testers.rgba.style.backgroundColor = "rgba("+rgba+")";
+			  }
+			});
+			var hexHandler = function(ev) {
+			  var hex = inputs.hex.value;
+			  var op = inputs.hexOp.value || 1;
+			  if(patterns.hex.test(hex)) {
+				var rgbaC = converter.hexToRgba(hex,op);
+				var rgba =  rgbaC.r+","+rgbaC.g+","+rgbaC.b+","+rgbaC.a;
+				var kml = converter.rgbaToKml(rgba);
+				inputs.rgba.value = rgba;
+				inputs.kml.value = kml;
+				
+				testers.hex.style.backgroundColor = "#"+hex;
+				testers.hex.style.opacity = op;
+				testers.rgba.style.backgroundColor = "rgba("+rgba+")";
+			  }
+			};
+			inputs.hex.addEventListener('keyup',hexHandler);
+			inputs.hexOp.addEventListener('keyup',hexHandler);
+			inputs.kml.addEventListener('keyup',function(ev){
+			  var kml = this.value;
+			  if(patterns.kml.test(kml)) {
+				var rgbaC = converter.kmlToRgba(kml);
+				var rgba =  rgbaC.r+","+rgbaC.g+","+rgbaC.b+","+rgbaC.a;
+				var hex = converter.rgbaToHex(rgba);
+				inputs.rgba.value = rgba;
+				inputs.hex.value = hex.color;
+				inputs.hexOp.value = hex.op;
+				
+				testers.hex.style.backgroundColor = "#"+hex.color;
+				testers.hex.style.opacity = hex.op;
+				testers.rgba.style.backgroundColor = "rgba("+rgba+")";
+			  }
+			});
+		  });
+</script>
+<div>
+			<label for="hex">Hex:</label>#<input type="text" id="hex" placeholder="RRGGBB" /><input id="opacity" type="text" placeholder="Opacity (0-1)" size="8" />
+			<div class='colorTester' id='testHex'></div>
+		</div>
+		<div>
+			<label for="rgba">rgba:</label>rgba(<input id="rgba" type="text" placeholder="r,g,b[,a]" />)
+			<div class='colorTester' id='testRgba'></div>
+		</div>
+		<div>
+			<label for="kml">Kml:</label>&lt;color&gt;<input id="kml" type="text" placeholder="AABBGGRR" />&lt;/color&gt;
+		</div>
 <h3>
 <a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h3>
 
