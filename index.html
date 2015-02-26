@@ -68,7 +68,9 @@ var patterns = {
 				inputs.hex.value = hex.color;
 				inputs.hexOp.value = hex.op;
 				inputs.kml.value = kml;
-				
+				if(rgba.split(',').length<4) {
+					rgba += ",1";
+				}
 				testers.hex.style.backgroundColor = "#"+hex.color;
 				testers.hex.style.opacity = hex.op;
 				testers.rgba.style.backgroundColor = "rgba("+rgba+")";
