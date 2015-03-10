@@ -20,7 +20,7 @@ var converter = (function() {
             if (colors.r.length < 2) colors.r = "0" + colors.r;
             if (colors.g.length < 2) colors.g = "0" + colors.g;
             if (colors.b.length < 2) colors.b = "0" + colors.b;
-			
+
             return {
                 color: colors.r + colors.g + colors.b,
                 op: op
@@ -75,7 +75,7 @@ var converter = (function() {
                 b: parseInt(colors.b, 16),
                 a: parseInt(colors.a, 16)
             };
-			// avoid weird floating point things
+            // avoid weird floating point things
             output.a = Math.round(output.a / 255 * 100) / 100;
             return output;
         }
