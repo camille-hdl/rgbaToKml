@@ -80,6 +80,7 @@
     exports.rgbaToHex = converter.rgbaToHex;
     exports.rgbaToKml = converter.rgbaToKml;
     exports.kmlToRgba = converter.kmlToRgba;
+    exports.hexToRgba = converter.hexToRgba;
     if (typeof module !== "undefined") {
         module.exports = exports;
     }

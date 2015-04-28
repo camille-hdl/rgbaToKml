@@ -21,7 +21,7 @@ var converter = (function() {
             if (colors.g.length < 2) colors.g = "0" + colors.g;
             if (colors.b.length < 2) colors.b = "0" + colors.b;
 
-            return {
+            return { 
                 color: colors.r + colors.g + colors.b,
                 op: op
             };
