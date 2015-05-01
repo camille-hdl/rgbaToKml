@@ -4,16 +4,36 @@ camille.hodoul@gmail.com
 */
 var converter = (function() {
     "use strict";
+    var errors = Object.create(null) || {};
+    errors.invOpacity = "invalid opacity value";
+    errors.invComponent = "invalid component value";
+    errors.nanComponent = "component is NaN";
+    errors.nanOpacity = "opacity is NaN";
     return { 
         rgbaToHex: function(rgba) {
             var comp = rgba.split(',');
             comp = comp.map(Number);
+            comp.map(function(component) {
+                if(isNaN(component)) {
+                    throw new TypeError(errors.nanComponent);
+                }
+                else if(component < 0 || component > 255) {
+                    throw new Error(errors.invComponent);
+                }
+            });
             var colors = {
                 r: comp[0],
                 g: comp[1] || 0,
                 b: comp[2] || 0
             };
-            var op = comp[3] || 1;
+            
+            var op = (typeof comp[3] !== "undefined") ? comp[3] : 1;
+            if(isNaN(op)) {
+                throw new TypeError(errors.nanOpacity);
+            }
+            else if(op < 0 || op > 1) {
+                throw new Error(errors.invOpacity);
+            }
             colors.r = colors.r.toString(16);
             colors.g = colors.g.toString(16);
             colors.b = colors.b.toString(16);
@@ -32,8 +52,27 @@ var converter = (function() {
                 g: hex.substr(2, 2) || "00",
                 b: hex.substr(4, 2) || "00"
             };
+            if(typeof op === "undefined") {
+                op = 1;
+            }
             op = Number(op);
-            if (isNaN(op)) op = 1;
+            if (isNaN(op)) {
+                throw new TypeError(errors.nanOpacity);
+            }
+            else if(op > 1 || op < 0) {
+                throw new Error(errors.invOpacity);
+            }
+            for(var component in colors) {
+                if(colors.hasOwnProperty(component)) {
+                    var temp = parseInt(colors[component],16);
+                    if(isNaN(temp)) {
+                        throw new TypeError(errors.nanComponent);
+                    }
+                    if(temp > 255 || temp < 0) {
+                        throw new Error(errors.invComponent);
+                    }
+                }
+            }
             return {
                 r: parseInt(colors.r, 16),
                 g: parseInt(colors.g, 16),

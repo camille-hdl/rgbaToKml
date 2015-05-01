@@ -7,12 +7,22 @@
             rgbaToHex: function(rgba) {
                 var comp = rgba.split(",");
                 comp = comp.map(Number);
+                comp.map(function(component) {
+                    if (isNaN(component)) {
+                        throw new TypeError("component is NaN");
+                    } else if (component < 0 || component > 255) {
+                        throw new Error("invalid component value");
+                    }
+                });
                 var colors = {
                     r: comp[0],
                     g: comp[1] || 0,
                     b: comp[2] || 0
                 };
-                var op = comp[3] || 1;
+                var op = typeof comp[3] !== "undefined" ? comp[3] : 1;
+                if (op < 0 || op > 1) {
+                    throw new Error("invalid opacity value");
+                }
                 colors.r = colors.r.toString(16);
                 colors.g = colors.g.toString(16);
                 colors.b = colors.b.toString(16);
@@ -32,6 +42,20 @@
                 };
                 op = Number(op);
                 if (isNaN(op)) op = 1;
+                if (op > 1 || op < 0) {
+                    throw new Error("invalid opacity value");
+                }
+                for (var component in colors) {
+                    if (colors.hasOwnProperty(component)) {
+                        var temp = parseInt(colors[i], 16);
+                        if (isNaN(temp)) {
+                            throw new TypeError("component is NaN");
+                        }
+                        if (temp > 255 || temp < 0) {
+                            throw new Error("invalid component value");
+                        }
+                    }
+                }
                 return {
                     r: parseInt(colors.r, 16),
                     g: parseInt(colors.g, 16),
