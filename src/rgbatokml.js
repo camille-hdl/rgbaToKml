@@ -83,12 +83,27 @@ var converter = (function() {
         rgbaToKml: function(rgba) {
             var comp = rgba.split(',');
             comp = comp.map(Number);
+            comp.map(function(component) {
+                if(isNaN(component)) {
+                    throw new TypeError(errors.nanComponent);
+                }
+                else if(component < 0 || component > 255) {
+                    throw new Error(errors.invComponent);
+                }
+            });
             var colors = {
                 r: comp[0],
                 g: comp[1] || 0,
                 b: comp[2] || 0
             };
-            var op = Number(comp[3] || 1);
+            
+            var op = (typeof comp[3] !== "undefined") ? comp[3] : 1;
+            if(isNaN(op)) {
+                throw new TypeError(errors.nanOpacity);
+            }
+            else if(op < 0 || op > 1) {
+                throw new Error(errors.invOpacity);
+            }
             op = parseInt(op * 255, 10);
             op = op.toString(16);
 
