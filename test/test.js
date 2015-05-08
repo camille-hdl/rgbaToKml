@@ -103,4 +103,27 @@ describe('converter', function(){
             assert.equal(expected.a,actual.a);
         })
     });
+    describe('#rgbaToKml()', function(){
+        it('should return fff0f0f0 when the input is "240,240,240,1"', function(){
+            var expected = "fff0f0f0";
+            var actual = converter.rgbaToKml("240,240,240,1");
+            assert.equal(expected, actual);
+        })
+        it('should return 66fa14b4 when the input is "180,20,250,0.4"', function(){
+            var expected = "66fa14b4";
+            var actual = converter.rgbaToKml("180,20,250,0.4");
+            assert.equal(expected, actual);
+        })
+        it('opacity should default to ff if input is "180,20,250"', function(){
+            var expected = "fffa14b4";
+            var actual = converter.rgbaToKml("180,20,250");
+            assert.equal(expected, actual);
+        })
+        /*it('should throw when the input has NaN "240,aaaaa,240,0.7"', function(){
+            assert.throws(function() {
+                var actual = converter.rgbaToKml("240,aaaaa,240,0.7");
+            },TypeError);
+        })*/
+        
+    })
 })
