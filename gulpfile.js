@@ -27,7 +27,12 @@ gulp.task('watch', function() {
     watcher.on('change', function(event) {
       console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
+	var watcherTests = gulp.watch('./test/*.js', ['mocha']);
+    watcherTests.on('change', function(event) {
+      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    });
 });
+
 gulp.task('mocha', function() {
     return gulp.src('test/test.js')
         .pipe(mocha());
