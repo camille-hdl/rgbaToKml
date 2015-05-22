@@ -124,20 +124,20 @@ describe('converter', function(){
                 var actual = converter.rgbaToKml("240,aaaaa,240,0.7"); 
             },TypeError);
         });
-		it('should throw when opacity is NaN "240,120,240,aze"', function(){
+        it('should throw when opacity is NaN "240,120,240,aze"', function(){
             assert.throws(function() {
                 var actual = converter.rgbaToKml("240,120,240,aze"); 
             },TypeError);
         });
-		it('should throw when opacity is not in range "240,120,240,99"', function(){
+        it('should throw when opacity is not in range "240,120,240,99"', function(){
             assert.throws(function() {
                 var actual = converter.rgbaToKml("240,120,240,99"); 
             },Error);
         });
         
     });
-	describe('#kmlToRgba()', function(){
-		it('should return 173,0,255,0.69 when the input is "afff00ad"', function(){
+    describe('#kmlToRgba()', function(){
+        it('should return 173,0,255,0.69 when the input is "afff00ad"', function(){
             var expected = {r:173,g:0,b:255,a:0.69};
             var actual = converter.kmlToRgba("afff00ad");
             assert.equal(expected.r, actual.r);
@@ -145,7 +145,7 @@ describe('converter', function(){
             assert.equal(expected.b, actual.b);
             assert.equal(expected.a,actual.a);
         });
-		it('should return 173,173,255,0.53 when the input is "88ffadad"', function(){
+        it('should return 173,173,255,0.53 when the input is "88ffadad"', function(){
             var expected = {r:173,g:173,b:255,a:0.53};
             var actual = converter.kmlToRgba("88ffadad");
             assert.equal(expected.r, actual.r);
@@ -153,18 +153,18 @@ describe('converter', function(){
             assert.equal(expected.b, actual.b);
             assert.equal(expected.a,actual.a);
         });
-		it('should throw when components are not in range "ttffadad"', function(){
+        it('should throw when components are not in range "ttffadad"', function(){
             assert.throws(function() {
                 var actual = converter.kmlToRgba("ttffadad");
             },TypeError);
         });
-		it('should default to 00 for every missing component "ffff"', function(){
-			var expected = {r:0,g:0,b:255,a:1};
+        it('should default to 00 for every missing component "ffff"', function(){
+            var expected = {r:0,g:0,b:255,a:1};
             var actual = converter.kmlToRgba("ffff");
             assert.equal(expected.r, actual.r);
             assert.equal(expected.g, actual.g);
             assert.equal(expected.b, actual.b);
             assert.equal(expected.a,actual.a);
         });
-	});
+    });
 });
